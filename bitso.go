@@ -210,6 +210,40 @@ func (srv *Service) CancelOrder(ctx context.Context, params CancelOrderParams) (
 	return
 }
 
+type CryptoWithdrawalParams struct {
+	Currency string `json:"currency"`
+	Amount   string `json:"amount"`
+	Address  string `json:"address"`
+	MaxFee  string `json:"max_fee,omitempty"`
+	DestinationTag string `json:"destination_tag,omitempty"`
+}
+
+type Withdrawal struct {
+	Wid       string `json:"wid"`
+	Status    string `json:"status"`
+	CreatedAt string `json:"created_at"`
+	Currency  string `json:"currency"`
+	Method    string `json:"method"`
+	Amount    string `json:"amount"`
+	Details   string `json:"details"`
+}
+
+type cryptoWithdrawalResponse struct {
+	Success    bool
+	Http       *http.Response
+	Withdrawal Withdrawal `json:"withdrawal"`
+}
+
+func (srv *Service) CryptoWithdrawals(ctx context.Context, params CryptoWithdrawalParams) (r cryptoWithdrawalResponse, err error) {
+	var (
+		resp *http.Response
+	)
+	req := srv.sling.New().Post("v3/crypto_withdrawal").BodyJSON(&params)
+	resp, err = srv.doReq(ctx, req, &r)
+	r.Http = resp
+	return
+}
+
 type PlacedOrder struct {
 	OID string `json:"oid"`
 }
