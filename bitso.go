@@ -211,10 +211,10 @@ func (srv *Service) CancelOrder(ctx context.Context, params CancelOrderParams) (
 }
 
 type CryptoWithdrawalParams struct {
-	Currency string `json:"currency"`
-	Amount   string `json:"amount"`
-	Address  string `json:"address"`
-	MaxFee  string `json:"max_fee,omitempty"`
+	Currency       string `json:"currency"`
+	Amount         string `json:"amount"`
+	Address        string `json:"address"`
+	MaxFee         string `json:"max_fee,omitempty"`
 	DestinationTag string `json:"destination_tag,omitempty"`
 }
 
@@ -332,5 +332,25 @@ func (srv *Service) OpenOrders(ctx context.Context, params OpenOrderParams) (r o
 	)
 	resp, err = srv.doReq(ctx, srv.sling.New().Get("v3/open_orders").QueryStruct(&params), &r)
 	r.Http = resp
+	return
+}
+
+type RegisterWebhookParams struct {
+	CallbackUrl string `json:"callback_url"`
+}
+
+type registerWebhookResponse struct {
+	Success bool
+	http    *http.Response
+	Payload string `json:"payload"`
+}
+
+func (srv *Service) RegisterWebhook(ctx context.Context, params RegisterWebhookParams) (r registerWebhookResponse, err error) {
+	var (
+		resp *http.Response
+	)
+	req := srv.sling.New().Post("/v3/webhooks").BodyJSON(&params)
+	resp, err = srv.doReq(ctx, req, &r)
+	r.http = resp
 	return
 }
