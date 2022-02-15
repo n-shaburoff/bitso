@@ -28,6 +28,11 @@ type BitsoErrRes struct {
 	Wrap *BitsoError `json:"error"`
 }
 
+type WithdrawalWebhook struct {
+	Event   string     `json:"event"`
+	Payload Withdrawal `json:"payload"`
+}
+
 func (e BitsoErrRes) Error() string {
 	return fmt.Sprintf("bitso: code %v message %v", e.Wrap.Code, e.Wrap.Message)
 }
@@ -219,13 +224,13 @@ type CryptoWithdrawalParams struct {
 }
 
 type Withdrawal struct {
-	Wid       string `json:"wid"`
-	Status    string `json:"status"`
-	CreatedAt string `json:"created_at"`
-	Currency  string `json:"currency"`
-	Method    string `json:"method"`
-	Amount    string `json:"amount"`
-	Details   string `json:"details"`
+	Wid       string      `json:"wid"`
+	Status    string      `json:"status"`
+	CreatedAt string      `json:"created_at"`
+	Currency  string      `json:"currency"`
+	Method    string      `json:"method"`
+	Amount    string      `json:"amount"`
+	Details   interface{} `json:"details"`
 }
 
 type cryptoWithdrawalResponse struct {
