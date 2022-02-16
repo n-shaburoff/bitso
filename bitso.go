@@ -100,6 +100,32 @@ func (srv *Service) Ticker(ctx context.Context, book string) (r tickResponse, er
 	return
 }
 
+type FundingDestination struct {
+	AccountIdentifierName string `json:"account_identifier_name"`
+	AccountIdentifier     string `json:"account_identifier"`
+}
+
+type fundingDestResponse struct {
+	Success bool
+	Http    *http.Response
+	Dest    FundingDestination `json:"payload"`
+}
+
+type FundingDestinationParams struct {
+	FundCurrency string `url:"fund_currency"`
+}
+
+func (srv *Service) FundingDestination(ctx context.Context, currency string) (r fundingDestResponse, err error) {
+	var (
+		resp *http.Response
+	)
+	resp, err = srv.doReq(ctx, srv.sling.New().Get("v3/funding_destination").
+		QueryStruct(FundingDestinationParams{FundCurrency: currency}), &r)
+
+	r.Http = resp
+	return
+}
+
 type orderBookResponse struct {
 	Success   bool
 	Http      *http.Response
