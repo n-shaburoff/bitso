@@ -287,7 +287,7 @@ type Withdrawal struct {
 type cryptoWithdrawalResponse struct {
 	Success    bool
 	Http       *http.Response
-	Withdrawal Withdrawal `json:"withdrawal"`
+	Withdrawal Withdrawal `json:"payload"`
 }
 
 func (srv *Service) CryptoWithdrawals(ctx context.Context, params CryptoWithdrawalParams) (r cryptoWithdrawalResponse, err error) {
