@@ -126,6 +126,31 @@ func (srv *Service) FundingDestination(ctx context.Context, currency string) (r 
 	return
 }
 
+type Funding struct {
+	Fid       string      `json:"fid"`
+	Status    string      `json:"status"`
+	CreatedAt string      `json:"created_at"`
+	Currency  string      `json:"currency"`
+	Method    string      `json:"method"`
+	Amount    string      `json:"amount"`
+	Details   interface{} `json:"details"`
+}
+
+type fundingsResponse struct {
+	Success  bool
+	Http     *http.Response
+	Fundings []Funding `json:"payload"`
+}
+
+func (srv *Service) Fundings(ctx context.Context) (r fundingsResponse, err error) {
+	var (
+		resp *http.Response
+	)
+	resp, err = srv.doReq(ctx, srv.sling.New().Get("v3/fundings"), &r)
+	r.Http = resp
+	return
+}
+
 type orderBookResponse struct {
 	Success   bool
 	Http      *http.Response
