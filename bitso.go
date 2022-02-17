@@ -127,13 +127,13 @@ func (srv *Service) FundingDestination(ctx context.Context, currency string) (r 
 }
 
 type Funding struct {
-	Fid       string      `json:"fid"`
-	Status    string      `json:"status"`
-	CreatedAt string      `json:"created_at"`
-	Currency  string      `json:"currency"`
-	Method    string      `json:"method"`
-	Amount    string      `json:"amount"`
-	Details   interface{} `json:"details"`
+	Fid       string                 `json:"fid"`
+	Status    string                 `json:"status"`
+	CreatedAt string                 `json:"created_at"`
+	Currency  string                 `json:"currency"`
+	Method    string                 `json:"method"`
+	Amount    string                 `json:"amount"`
+	Details   map[string]interface{} `json:"details"`
 }
 
 type fundingsResponse struct {
@@ -275,13 +275,13 @@ type CryptoWithdrawalParams struct {
 }
 
 type Withdrawal struct {
-	Wid       string      `json:"wid"`
-	Status    string      `json:"status"`
-	CreatedAt string      `json:"created_at"`
-	Currency  string      `json:"currency"`
-	Method    string      `json:"method"`
-	Amount    string      `json:"amount"`
-	Details   interface{} `json:"details"`
+	Wid       string                 `json:"wid"`
+	Status    string                 `json:"status"`
+	CreatedAt string                 `json:"created_at"`
+	Currency  string                 `json:"currency"`
+	Method    string                 `json:"method"`
+	Amount    string                 `json:"amount"`
+	Details   map[string]interface{} `json:"details"`
 }
 
 type cryptoWithdrawalResponse struct {
