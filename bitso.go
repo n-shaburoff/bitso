@@ -302,13 +302,13 @@ type Withdrawal struct {
 	Details   Details `json:"details"`
 }
 
-type cryptoWithdrawalResponse struct {
+type CryptoWithdrawalResponse struct {
 	Success    bool
 	Http       *http.Response
 	Withdrawal Withdrawal `json:"payload"`
 }
 
-func (srv *Service) CryptoWithdrawals(ctx context.Context, params CryptoWithdrawalParams) (r cryptoWithdrawalResponse, err error) {
+func (srv *Service) CryptoWithdrawals(ctx context.Context, params CryptoWithdrawalParams) (r CryptoWithdrawalResponse, err error) {
 	var (
 		resp *http.Response
 	)
