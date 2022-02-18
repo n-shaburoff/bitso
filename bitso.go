@@ -35,8 +35,8 @@ type WithdrawalWebhook struct {
 
 type Details map[string]interface{}
 
-func (d Details) GetRippleTxHash() string {
-	if id, ok := d["ripple_transaction_hash"]; ok {
+func (d Details) GetTxHash() string {
+	if id, ok := d["tx_hash"]; ok {
 		return id.(string)
 	} else {
 		return ""
