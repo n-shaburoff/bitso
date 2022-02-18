@@ -33,6 +33,24 @@ type WithdrawalWebhook struct {
 	Payload Withdrawal `json:"payload"`
 }
 
+type Details map[string]interface{}
+
+func (d Details) GetRippleTxHash() string {
+	if id, ok := d["ripple_transaction_hash"]; ok {
+		return id.(string)
+	} else {
+		return ""
+	}
+}
+
+func (d Details) Get(key string) interface{} {
+	if val, ok := d[key]; ok {
+		return val
+	} else {
+		return nil
+	}
+}
+
 func (e BitsoErrRes) Error() string {
 	return fmt.Sprintf("bitso: code %v message %v", e.Wrap.Code, e.Wrap.Message)
 }
